@@ -4,7 +4,7 @@ import {
   assertNotEquals
 } from "https://deno.land/std@v0.27.0/testing/asserts.ts";
 import { runIfMain, test } from "https://deno.land/std@v0.27.0/testing/mod.ts";
-import { getFreePort } from "./mod.ts";
+import { isFreePort, getFreePort } from "./mod.ts";
 const { run, execPath } = Deno;
 
 function sleep(ms: number): Promise<void> {
@@ -53,15 +53,19 @@ test(async function testGetFreePort() {
   const port = await getFreePort(10086);
 
   assert(port);
-  assert(typeof port === "number");
+  assertEquals(typeof port, "number");
   assertEquals(port, 10086);
+
+  assertEquals(await isFreePort(10086), true);
 });
 
 testWithServer(10086, async function testGetFreePort() {
   const port = await getFreePort(10086);
+
   assert(port);
   assertEquals(typeof port, "number");
   assertNotEquals(port, 10086);
+  assertEquals(await isFreePort(10086), false);
 });
 
 runIfMain(import.meta);

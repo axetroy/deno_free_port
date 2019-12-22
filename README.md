@@ -4,10 +4,11 @@
 
 ```ts
 // Requires `--allow-net` flag
-import { getFreePort } from "https://deno.land/x/free_port/mod.ts";
+import { isFreePort, getFreePort } from "https://deno.land/x/free_port/mod.ts";
 
 // if port 3000 is available. then return or return a random port
-console.log(await getFreePort(3000));
+console.log(await getFreePort(3000)); // 3000 or random port
+console.log(await isFreePort(3000)); // true or false
 ```
 
 ## License
