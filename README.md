@@ -3,6 +3,7 @@
 ### get free port for Deno
 
 ```ts
+// Requires `--allow-net` flag
 import { getFreePort } from "https://deno.land/x/free_port/mod.ts";
 
 // if port 3000 is available. then return or return a random port
