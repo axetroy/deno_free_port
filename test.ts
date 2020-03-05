@@ -3,6 +3,7 @@ import {
   assertEquals,
   assertNotEquals
 } from "https://deno.land/std@v0.35.0/testing/asserts.ts";
+import * as path from "https://deno.land/std@v0.35.0/path/mod.ts";
 import { isFreePort, getFreePort } from "./mod.ts";
 const { test, run, execPath } = Deno;
 
@@ -13,6 +14,10 @@ function sleep(ms: number): Promise<void> {
     }, ms);
   });
 }
+
+const __filepath = import.meta.url.replace("file://", "");
+
+console.log("test filename:", __filepath);
 
 function testWithServer(port: number, fn: () => Promise<void>) {
   test({
@@ -25,7 +30,7 @@ function testWithServer(port: number, fn: () => Promise<void>) {
           execPath(),
           "run",
           "--allow-net",
-          "./testdata/server.ts",
+          path.join(path.dirname(__filepath), "testdata", "server.ts"),
           port + ""
         ]
       });

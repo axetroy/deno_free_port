@@ -1,6 +1,6 @@
 export interface freePortOption {
   hostname?: string;
-  transport?: "tcp";
+  transport?: Deno.Transport;
 }
 
 function random(min: number, max: number): number {
