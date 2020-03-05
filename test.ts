@@ -30,7 +30,7 @@ function testWithServer(port: number, fn: () => Promise<void>) {
         ]
       });
 
-      await sleep(2000);
+      await sleep(5000);
 
       let err!: Error;
       try {
