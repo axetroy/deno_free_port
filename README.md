@@ -7,7 +7,7 @@
 import {
   isFreePort,
   getFreePort,
-} from 'https://deno.land/x@v0.1.0/free_port/mod.ts'
+} from 'https://deno.land/x@v1.1.0/free_port/mod.ts'
 
 // if port 3000 is available. then return or return a random port
 console.log(await getFreePort(3000)) // 3000 or random port
