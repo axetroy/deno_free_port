@@ -2,10 +2,9 @@ import {
   assert,
   assertEquals,
   assertNotEquals
-} from "https://deno.land/std@v0.27.0/testing/asserts.ts";
-import { runIfMain, test } from "https://deno.land/std@v0.27.0/testing/mod.ts";
+} from "https://deno.land/std@v0.35.0/testing/asserts.ts";
 import { isFreePort, getFreePort } from "./mod.ts";
-const { run, execPath } = Deno;
+const { test, run, execPath } = Deno;
 
 function sleep(ms: number): Promise<void> {
   return new Promise(resolve => {
@@ -33,7 +32,7 @@ function testWithServer(port: number, fn: () => Promise<void>) {
 
       await sleep(2000);
 
-      let err: Error;
+      let err!: Error;
       try {
         fn();
       } catch (e) {
@@ -60,12 +59,10 @@ test(async function testGetFreePort() {
 });
 
 testWithServer(10086, async function testGetFreePort() {
-  const port = await getFreePort(10086);
+  const port = await getFreePort(10086, {});
 
   assert(port);
   assertEquals(typeof port, "number");
   assertNotEquals(port, 10086);
   assertEquals(await isFreePort(10086), false);
 });
-
-runIfMain(import.meta);

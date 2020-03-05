@@ -23,18 +23,16 @@ export async function isFreePort(
   try {
     const listener = await Deno.listen({
       port: port,
-      hostname: options.hostname,
-      transport: options.transport
+      hostname: options.hostname || "127.0.0.1",
+      transport: options.transport || "tcp"
     });
 
     listener.close();
 
     return true;
   } catch (err) {
-    if (err instanceof Deno.DenoError) {
-      if (err.kind === Deno.ErrorKind.AddrInUse) {
-        return false;
-      }
+    if (err instanceof Deno.errors.AddrInUse) {
+      return false;
     }
 
     throw err;
@@ -59,24 +57,21 @@ export async function getFreePort(
   try {
     const listener = await Deno.listen({
       port: port,
-      hostname: options.hostname,
-      transport: options.transport
+      hostname: options.hostname || "127.0.0.1",
+      transport: options.transport || "tcp"
     });
 
     listener.close();
 
     return port;
   } catch (err) {
-    if (err instanceof Deno.DenoError) {
-      if (err.kind === Deno.ErrorKind.AddrInUse) {
-        const newPort =
-          port <= 1023
-            ? random(0, 1023)
-            : port <= 49151
-            ? random(1024, 49151)
-            : random(49152, 65535);
-        return getFreePort(newPort, options);
-      }
+    if (err instanceof Deno.errors.AddrInUse) {
+      const newPort = port <= 1023
+        ? random(0, 1023)
+        : port <= 49151
+          ? random(1024, 49151)
+          : random(49152, 65535);
+      return getFreePort(newPort, options);
     }
 
     throw err;

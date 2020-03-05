@@ -1,10 +1,14 @@
-const port = parseInt(Deno.args[1]) as number;
+const port = parseInt(Deno.args[0]) as number;
 
-const listener = Deno.listen({ port });
+console.log(`Listen on port ${port}`);
 
-console.log(`http://localhost:${port}/`);
+const listener = Deno.listen(
+  { port, hostname: "127.0.0.1", transport: "tcp" }
+);
 
 while (true) {
   const connection = await listener.accept();
   console.log(connection);
 }
+
+export {};
