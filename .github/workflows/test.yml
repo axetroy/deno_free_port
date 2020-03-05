@@ -16,9 +16,13 @@ jobs:
           deno-version: ${{ matrix.deno }}
 
       - name: Check code format
+        env:
+          RUST_BACKTRACE: 1
         run: |
-          deno fmt --check *.ts
+          deno fmt --check **/*.ts
 
       - name: Test
+        env:
+          RUST_BACKTRACE: 1
         run: |
           deno test -A
