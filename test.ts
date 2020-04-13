@@ -1,14 +1,14 @@
 import {
   assert,
   assertEquals,
-  assertNotEquals
-} from "https://deno.land/std@v0.35.0/testing/asserts.ts";
-import * as path from "https://deno.land/std@v0.35.0/path/mod.ts";
+  assertNotEquals,
+} from "https://deno.land/std@v0.40.0/testing/asserts.ts";
+import * as path from "https://deno.land/std@v0.40.0/path/mod.ts";
 import { isFreePort, getFreePort } from "./mod.ts";
 const { test, run, execPath } = Deno;
 
 function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve();
     }, ms);
@@ -26,13 +26,13 @@ function testWithServer(port: number, fn: () => Promise<void>) {
       const ps = run({
         stdout: "inherit",
         stderr: "inherit",
-        args: [
+        cmd: [
           execPath(),
           "run",
           "--allow-net",
           path.join(path.dirname(__filepath), "testdata", "server.ts"),
-          port + ""
-        ]
+          port + "",
+        ],
       });
 
       await sleep(5000);
@@ -49,11 +49,11 @@ function testWithServer(port: number, fn: () => Promise<void>) {
       if (err) {
         throw err;
       }
-    }
+    },
   });
 }
 
-test(async function testGetFreePort() {
+test(async function testGetFreePortIfPortIsFree() {
   const port = await getFreePort(10086);
 
   assert(port);
@@ -63,8 +63,8 @@ test(async function testGetFreePort() {
   assertEquals(await isFreePort(10086), true);
 });
 
-testWithServer(10086, async function testGetFreePort() {
-  const port = await getFreePort(10086, {});
+testWithServer(10086, async function testGetFreePortIfPortHasBeenToke() {
+  const port = await getFreePort(10086);
 
   assert(port);
   assertEquals(typeof port, "number");

@@ -1,6 +1,6 @@
 export interface freePortOption {
   hostname?: string;
-  transport?: Deno.Transport;
+  transport?: "tcp";
 }
 
 function random(min: number, max: number): number {
@@ -18,13 +18,13 @@ function random(min: number, max: number): number {
  */
 export async function isFreePort(
   port: number,
-  options: freePortOption = {}
+  options: freePortOption = {},
 ): Promise<boolean> {
   try {
     const listener = await Deno.listen({
       port: port,
-      hostname: options.hostname || "127.0.0.1",
-      transport: options.transport || "tcp"
+      ...(options.hostname ? { hostname: options.hostname } : {}),
+      ...(options.transport ? { transport: options.transport } : {}),
     });
 
     listener.close();
@@ -52,13 +52,13 @@ export async function isFreePort(
  */
 export async function getFreePort(
   port: number,
-  options: freePortOption = {}
+  options: freePortOption = {},
 ): Promise<number> {
   try {
     const listener = await Deno.listen({
       port: port,
-      hostname: options.hostname || "127.0.0.1",
-      transport: options.transport || "tcp"
+      ...(options.hostname ? { hostname: options.hostname } : {}),
+      ...(options.transport ? { transport: options.transport } : {}),
     });
 
     listener.close();

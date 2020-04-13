@@ -1,8 +1,6 @@
 const port = parseInt(Deno.args[0]) as number;
 
-const listener = Deno.listen(
-  { port, hostname: "127.0.0.1", transport: "tcp" }
-);
+const listener = Deno.listen({ port });
 
 console.log(`Listen on port ${port}`);
 
