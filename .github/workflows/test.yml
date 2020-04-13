@@ -1,4 +1,5 @@
-on: push
+on: [push, pull_request]
+
 name: test
 jobs:
   test:
@@ -18,6 +19,7 @@ jobs:
       - name: Check code format
         env:
           RUST_BACKTRACE: 1
+        if: runner.os != 'Windows'
         run: |
           deno fmt --check **/*.ts
 
