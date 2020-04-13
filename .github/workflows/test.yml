@@ -19,7 +19,7 @@ jobs:
         env:
           RUST_BACKTRACE: 1
         run: |
-          deno fmt --check
+          deno fmt --check **/*.ts
 
       - name: Test
         env:
