@@ -19,7 +19,7 @@ const __filepath = path.normalize(
   import.meta.url.replace("file://", "").replace(/^\\/, ""),
 );
 
-console.log("test filename:", __filepath);
+console.log(`test filename: ${JSON.stringify(__filepath)}`);
 
 function testWithServer(port: number, fn: () => Promise<void>) {
   test({
