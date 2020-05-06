@@ -8,5 +8,3 @@ while (true) {
   const connection = await listener.accept();
   console.log(connection);
 }
-
-export {};
