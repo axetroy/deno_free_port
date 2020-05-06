@@ -15,7 +15,7 @@ function sleep(ms: number): Promise<void> {
   });
 }
 
-const __filepath = import.meta.url.replace("file://", "");
+const __filepath = path.normalize(import.meta.url.replace("file://", ""));
 
 console.log("test filename:", __filepath);
 
