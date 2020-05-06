@@ -16,7 +16,7 @@ function sleep(ms: number): Promise<void> {
 }
 
 const __filepath = path.normalize(
-  import.meta.url.replace("file://", "").replace(/\\/, ""),
+  import.meta.url.replace("file://", "").replace(/^\\/, ""),
 );
 
 console.log("test filename:", __filepath);
